@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
 
-        if (Schema::hasTable('')) {
+        if (Schema::hasTable('user_ratings')) {
             $this->checkColumns();
         } else {
             Schema::create('user_ratings', function (Blueprint $table) {
