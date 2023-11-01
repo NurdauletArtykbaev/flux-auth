@@ -15,4 +15,14 @@ php artisan vendor:publish --provider="Nurdaulet\FluxAuth\FluxAuthServiceProvide
 ```
 
 
+``` php
+    'providers' => [
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => Nurdaulet\FluxAuth\Models\User::class,
+        ],
+    ] 
+```
+
+
 

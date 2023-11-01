@@ -51,11 +51,11 @@ Route::group(['prefix' => 'api'], function () {
         Route::post('last-online', [UserController::class, 'online']);
 
         /** other users */
-        Route::get('{id}/about', [UserController::class, 'aboutUser']);
         Route::post('{id}/complain', [ComplaintController::class, 'store']);
         Route::post('{id}/rate', [UserRatingController::class, 'store']);
 
     });
+    Route::get('user/{id}/about', [UserController::class, 'aboutUser']);
     Route::get('roles', RoleController::class)->middleware('auth:sanctum');
 
 });

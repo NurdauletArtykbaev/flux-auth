@@ -41,8 +41,8 @@ class UserResource extends JsonResource
 //            'permissions' => $this->when(isset($this->permissions), $this->permissions),
             'balance' => $this->whenHas('balance', function () {
                 return [
-                    'money' => $this->balance->money,
-                    'bonus' => $this->balance->bonus,
+                    'money' =>(int) $this->balance->money,
+                    'bonus' =>(int) $this->balance->bonus,
                 ];
             }),
 //            'lord_balance' => $this->whenHas('lord_balance',function () {
