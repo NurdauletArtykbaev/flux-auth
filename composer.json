@@ -11,8 +11,6 @@
     ],
     "require": {
         "php": "^8.0",
-        "illuminate/database": "^9.0",
-        "illuminate/support": "^9.0",
         "nurdaulet/sms-kz": "^1.0.0",
         "nurdaulet/flux-base": "dev-main",
         "nurdaulet/flux-orders": "dev-main",
