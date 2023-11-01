@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Nurdaulet\FluxAuth\Helpers\StringFormatterHelper;
 
-class FluxAuth extends ServiceProvider
+class FluxAuthServiceProvider extends ServiceProvider
 {
 
     public function boot()
