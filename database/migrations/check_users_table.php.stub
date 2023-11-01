@@ -112,7 +112,7 @@ return new class extends Migration {
         }
         if (!Schema::hasColumn('users', 'phone_verified_at')) {
             Schema::table('users', function (Blueprint $table) {
-                $table->timestamp('email_verified_at')->nullable();
+                $table->timestamp('phone_verified_at')->nullable();
             });
         }
         if (!Schema::hasColumn('users', 'type_organization_id')) {
