@@ -1,0 +1,50 @@
+{
+    "name": "nurdaulet/flux-auth",
+    "description": "Authorization  providers use sms auth",
+    "minimum-stability": "dev",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Nurdaulet",
+            "email": "artykbaev.nurdaulet@mail.ru"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "illuminate/database": "^9.0",
+        "illuminate/support": "^9.0",
+        "nurdaulet/sms-kz": "^1.0.0",
+        "nurdaulet/flux-base": "dev-main",
+        "nurdaulet/flux-orders": "dev-main",
+        "nurdaulet/flux-wallet": "dev-main",
+        "nurdaulet/flux-items": "dev-main",
+        "spatie/laravel-permission": "^5.10"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.30",
+        "phpunit/phpunit": "^9.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nurdaulet\\FluxAuth\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "NurdauletArtykbaev\\FluxAuth\\Test\\": "tests/"
+    },
+    "scripts": {
+        "test": [
+            "vendor/bin/phpunit"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nurdaulet\\FluxAuth\\FluxAuthServiceProvider"
+            ],
+            "aliases": {
+                "StringFormatter": "Nurdaulet\\FluxAuth\\Facades\\StringFormatter"
+            }
+        }
+    }
+}

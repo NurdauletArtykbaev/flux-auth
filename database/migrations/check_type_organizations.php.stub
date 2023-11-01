@@ -1,0 +1,58 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        if (Schema::hasTable('type_organizations')) {
+            $this->checkColumns();
+        } else {
+            Schema::create('type_organizations', function (Blueprint $table) {
+                $table->id();
+                $table->text('name');
+                $table->boolean('is_active')->default(1);
+                $table->softDeletes();
+                $table->timestamps();
+            });
+        }
+
+    }
+
+    private function checkColumns()
+    {
+        if (!Schema::hasColumn('type_organizations', 'name')) {
+            Schema::table('type_organizations', function (Blueprint $table) {
+                $table->text('name');
+            });
+        };
+        if (!Schema::hasColumn('type_organizations', 'is_active')) {
+            Schema::table('type_organizations', function (Blueprint $table) {
+                $table->boolean('is_active')->default(1);
+            });
+        };
+        if (!Schema::hasColumn('type_organizations', 'deleted_at')) {
+            Schema::table('type_organizations', function (Blueprint $table) {
+                $table->softDeletes();
+            });
+        }
+    }
+
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('organizations');
+    }
+};
