@@ -17,7 +17,7 @@ class FluxAuthServiceProvider extends ServiceProvider
             ]);
             $this->publishMigrations();
         }
-        $this->loadRoutesFrom(__DIR__ . '../routes/api.php');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
     }
 
     public function register()
