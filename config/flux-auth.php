@@ -19,7 +19,8 @@ return [
         'city' => \Nurdaulet\FluxAuth\Models\City::class,
     ],
     'options' => [
-        'storage_disk' => 's3'
+        'storage_disk' => 's3',
+        'filament_email_access_end' => ''
     ],
     'permission' => [
         'models' => [

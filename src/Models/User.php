@@ -109,7 +109,12 @@ class User extends Authenticatable implements FilamentUser
     }
     public function canAccessFilament(): bool
     {
-        return str_ends_with($this->email, '@naprocat.kz') && $this->hasVerifiedEmail();
+        $accessCondition = config('flux-auth.options.filament_email_access_end');
+
+        if (empty($accessCondition)) {
+            return true;
+        }
+        return str_ends_with($this->email, $accessCondition) && $this->hasVerifiedEmail();
     }
 
 
