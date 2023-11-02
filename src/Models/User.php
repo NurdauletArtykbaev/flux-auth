@@ -18,6 +18,7 @@ namespace Nurdaulet\FluxAuth\Models;
 
 namespace Nurdaulet\FluxAuth\Models;
 
+use Filament\Models\Contracts\HasName;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -34,7 +35,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int $id
  * @property string $contract
  */
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, HasName
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
     use HasRoles {
@@ -107,6 +108,11 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->originalRoles();
     }
+    public function getFilamentName(): string
+    {
+        return $this->name ?? 'П';
+    }
+
     public function canAccessFilament(): bool
     {
         $accessCondition = config('flux-auth.options.filament_email_access_end');
