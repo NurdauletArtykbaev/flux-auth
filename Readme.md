@@ -16,7 +16,6 @@ php artisan vendor:publish --provider="Nurdaulet\FluxWallet\FluxWalletServicePro
 
 ```
 
-
 ``` php
     'providers' => [
         'users' => [
@@ -24,6 +23,13 @@ php artisan vendor:publish --provider="Nurdaulet\FluxWallet\FluxWalletServicePro
             'model' => Nurdaulet\FluxAuth\Models\User::class,
         ],
     ] 
+```
+Вы можете самостоятельно добавить поставщика услуг административной панели Filament в файл config/app.php.
+``` php
+'providers' => [
+    // ...
+    Nurdaulet\FluxAuth\FluxAuthFilamentServiceProvider::class,
+];
 ```
 
 
