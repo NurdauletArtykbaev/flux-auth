@@ -15,6 +15,7 @@
         "nurdaulet/flux-base": "*",
         "nurdaulet/flux-orders": "*",
         "nurdaulet/flux-wallet": "*",
+        "ajcastro/eager-load-pivot-relations": "^0.3.0",
         "nurdaulet/flux-items": "*",
         "spatie/laravel-permission": "^5.10"
     },
