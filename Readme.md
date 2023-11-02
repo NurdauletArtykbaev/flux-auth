@@ -12,6 +12,8 @@
 ``` bash
 php artisan vendor:publish --provider="Nurdaulet\FluxAuth\FluxAuthServiceProvider"
 
+php artisan vendor:publish --provider="Nurdaulet\FluxWallet\FluxWalletServiceProvider"
+
 ```
 
 
