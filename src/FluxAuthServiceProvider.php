@@ -14,7 +14,7 @@ class FluxAuthServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../config/flux-auth.php' => config_path('flux-auth.php'),
-            ]);
+            ], 'flux-auth-config');
             $this->publishMigrations();
         }
         $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');

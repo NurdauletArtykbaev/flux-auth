@@ -14,7 +14,7 @@
 php artisan vendor:publish --provider="Nurdaulet\FluxAuth\FluxAuthServiceProvider"
 
 php artisan vendor:publish --provider="Nurdaulet\FluxWallet\FluxWalletServiceProvider"
-
+php artisan vendor:publish --tag flux-wallet-config
 ```
 
 Замените конфигурационный файл config/auth.php
