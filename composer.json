@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "^8.0",
-        "nurdaulet/sms-kz": "^1.0.1",
+        "nurdaulet/sms-kz": "^1.0.0",
         "nurdaulet/flux-base": "*",
         "nurdaulet/flux-orders": "*",
         "nurdaulet/flux-wallet": "*",
