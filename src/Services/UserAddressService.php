@@ -22,7 +22,7 @@ class UserAddressService
             ->exists();
         $data['is_main'] = !$hasMainAddress;
         $data['user_id'] = $user->id;
-        return $this->addressRepository->store($user, $data);
+        return $this->addressRepository->store($data);
     }
 
     public function update($id, $data)

@@ -19,10 +19,8 @@ class UserAddressRepository
             ->get();
     }
 
-    public function store($user, $data)
+    public function store($data)
     {
-
-
         return config('flux-auth.models.user_address')::create($data);
     }
 

@@ -13,6 +13,7 @@ class SaveUserAddressRequest extends FormRequest
             'city_id' => 'required|int|exists:cities,id',
             'name' => 'nullable|string',
             'address' => 'required|string',
+            'is_type_store' => 'nullable',
             'house' => 'nullable',
             'floor' => 'nullable|int',
             'apartment' => 'nullable',
