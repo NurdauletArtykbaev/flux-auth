@@ -30,21 +30,6 @@ class AuthRepository
         return $user->createToken("API TOKEN")->plainTextToken;
     }
 
-    public function register(User $user, $name, $surname)
-    {
-        if (!$name) {
-            abort(400, "Имя не может быть пустым");
-        }
-
-        if (!$surname) {
-            abort(400, "Фамилия не может быть пустым");
-        }
-
-        $user->save();
-
-        return $user;
-    }
-
     private function createUser($phoneNumber)
     {
         $user = User::where('phone', $phoneNumber)->create([

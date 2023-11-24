@@ -37,11 +37,4 @@ class AuthService
     {
         return $this->authRepository->login($phoneNumber, $code);
     }
-
-    public function register(User $user, $name, $surname)
-    {
-        return $this->authRepository->register($user, $name, $surname);
-    }
-
-
 }

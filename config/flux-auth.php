@@ -20,6 +20,7 @@ return [
     ],
     'options' => [
         'storage_disk' => 's3',
+        'is_enabled_balance' => false,
         'filament_email_access_end' => ''
     ],
     'permission' => [

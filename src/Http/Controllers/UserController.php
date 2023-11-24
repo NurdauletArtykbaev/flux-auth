@@ -7,7 +7,6 @@ use Nurdaulet\FluxAuth\Http\Requests\UpdateUserRequest;
 use Nurdaulet\FluxAuth\Http\Requests\UserSaveContractRequest;
 use Nurdaulet\FluxAuth\Http\Resources\AboutUserResource;
 use Nurdaulet\FluxAuth\Http\Resources\UserResource;
-use Nurdaulet\FluxAuth\Models\User;
 use Nurdaulet\FluxAuth\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

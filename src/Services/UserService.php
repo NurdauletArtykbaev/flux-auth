@@ -113,8 +113,9 @@ class UserService
 //            $user->monthly_ad_orders_count = OrdersFacade::getMonthlyOrders($user->id);
 //            $user->items_count = ItemsFacade::countByUserId($user->id);
 //        }
-        $user->balance = WalletFacade::getBalanceByUserId($user->id);
-
+        if (config('flux-auth.options.is_enabled_balance')) {
+            $user->balance = WalletFacade::getBalanceByUserId($user->id);
+        }
 //        if ($user->roles->isNotEmpty()) {
 //            $permissions = $user->getAllPermissions();
 //        } else {

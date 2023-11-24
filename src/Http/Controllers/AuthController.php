@@ -43,21 +43,9 @@ class AuthController
         ]);
     }
 
-
-    public function register(Request $request)
-    {
-        $data = $this->authService->register($request->user(), $request->get('name'), $request->get('surname'));
-
-        return response()->json([
-            'data' => $data,
-            'message' => 'Имя и Фамилия обновлены',
-        ]);
-    }
-
     public function logout(Request $request)
     {
-        $ref = new \ReflectionClass($request->user());
-        dd($request->user()->getAttributes(), (new User())->getAttributes());
+//        $ref = new \ReflectionClass($request->user());
         $request->user()->tokens()->delete();
 
         return response()->json([

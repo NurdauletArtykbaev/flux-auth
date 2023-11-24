@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Nurdaulet\FluxAuth\Helpers\UserHelper;
 
@@ -103,7 +104,12 @@ return new class extends Migration {
             });
         } else {
             Schema::table('users', function (Blueprint $table) {
-                $table->dropUnique('users_email_unique');
+//                if (Schema::table('users')->has)
+//                $table->dropUnique('users_email_unique');
+                $index_exists = collect(DB::select("SHOW INDEXES FROM users"))->pluck('users_email_unique')->contains('users_email_unique');
+                if ($index_exists) {
+                    $table->dropUnique("users_email_unique");
+                }
                 $table->string('email')->nullable()->change();
             });
         }

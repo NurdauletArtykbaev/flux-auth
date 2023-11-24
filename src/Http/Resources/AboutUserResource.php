@@ -15,9 +15,6 @@ class AboutUserResource extends JsonResource
      */
     public function toArray($request)
     {
-        $tst = '2018-09-26T21:40:29+02:00';
-        $date = '2023-06-06';
-        $date = null;
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -31,17 +28,9 @@ class AboutUserResource extends JsonResource
             'avatar_url' => $this->avatar_url,
             'avatar_color' => $this->avatar_color,
             'last_online' => $this->last_online,
-            'test' => now(),
-            'test1' => now()->format('c'),
-            '$tst' => Carbon::create($tst)->timezone('Asia/Almaty')->format('d.m.Y H:i'),
             'is_online' =>  $this->last_online
                 ? Carbon::now()->subMinutes(5)->format('Y.m.d H:i') <= $this->last_online
                 : false,
-//            'cur' => Carbon::create( $date)->timestamp  <= Carbon::create( $this->last_online)->timestamp,
-//            '$date' => $date ,
-//            'curd' => Carbon::create( $date) ,
-//            'is_online' => Carbon::create( $this->last_online)
-//        $this->last_online
         ];
     }
 }
