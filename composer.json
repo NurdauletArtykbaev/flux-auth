@@ -38,9 +38,6 @@
     },
     "extra": {
         "laravel": {
-            "providers": [
-                "Nurdaulet\\FluxAuth\\FluxAuthServiceProvider"
-            ],
             "aliases": {
                 "StringFormatter": "Nurdaulet\\FluxAuth\\Facades\\StringFormatter"
             }

@@ -16,6 +16,7 @@ class UserResource extends JsonResource
             'surname' => $this->surname,
             'avatar' => $this->avatar ? config('filesystems.disks.s3.url').'/'.$this->avatar : null,
             'avatar_color' => $this->avatar_color,
+            'avg_rating' => (string)$this->avg_rating <= 0 ? 0 : $this->avg_rating,
             'phone' => $this->phone,
 //            'logo_url' => $this->logoUrl,
 //            'graphic_works' => $this->graphic_works ?: [] ,
@@ -30,7 +31,7 @@ class UserResource extends JsonResource
 //            'iik' => $this->iik,
             'is_verified' => $this->is_verified,
             'is_identified' => $this->is_identified,
-            'is_enabled_notification' => $this->is_enabled_notification,
+//            'is_enabled_notification' => $this->is_enabled_notification,
 //            'role' => $this->whenLoaded('roles', function () {
 //                return new UserRoleResource($this->roles->first());
 //            }),
