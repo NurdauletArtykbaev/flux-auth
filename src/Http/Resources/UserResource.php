@@ -16,7 +16,7 @@ class UserResource extends JsonResource
             'surname' => $this->surname,
             'avatar' => $this->avatar ? config('filesystems.disks.s3.url').'/'.$this->avatar : null,
             'avatar_color' => $this->avatar_color,
-            'avg_rating' => (string)$this->avg_rating <= 0 ? 0 : $this->avg_rating,
+            'avg_rating' => (string) ($this->avg_rating <= 0 ? 0 : $this->avg_rating),
             'phone' => $this->phone,
 //            'logo_url' => $this->logoUrl,
 //            'graphic_works' => $this->graphic_works ?: [] ,
