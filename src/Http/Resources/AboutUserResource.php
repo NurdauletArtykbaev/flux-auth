@@ -24,7 +24,7 @@ class AboutUserResource extends JsonResource
             'avg_rating' => (string)$this->avg_rating <= 0 ? null : $this->avg_rating,
             'ratings_count' => $this->avg_rating > 0 ? ($this->ratings_count <= 0 ? $this->id + 7 : $this->ratings_count) : 0,
             'phone' => $this->phone,
-            'is_verified' => $this->is_verified,
+            'moderation_status' => $this->is_verified,
             'avatar_url' => $this->avatar_url,
             'avatar_color' => $this->avatar_color,
             'last_online' => $this->last_online,

@@ -29,7 +29,7 @@ class UserResource extends JsonResource
 //            'born_date' => $this->born_date,
 //            'bik' => $this->bik,
 //            'iik' => $this->iik,
-            'is_verified' => $this->is_verified,
+            'moderation_status' => $this->is_verified,
             'is_identified' => $this->is_identified,
 //            'is_enabled_notification' => $this->is_enabled_notification,
 //            'role' => $this->whenLoaded('roles', function () {
