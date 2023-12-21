@@ -26,7 +26,7 @@ class AuthService
             if (!empty($user) && $user->code) {
                 $code = $user->code;
             }else  {
-                SmsKzFacade::to($phone)->text(env('app_name'). " код: $code")->send();
+                SmsKzFacade::to($phone)->text(env('APP_NAME'). " код: $code")->send();
             }
         }
 
