@@ -56,6 +56,7 @@ return new class extends Migration {
 
                 $table->rememberToken();
                 $table->boolean('is_enabled_notification')->default(false);
+                $table->boolean('is_owner')->default(false)->comment('Владелец');
                 $table->boolean('is_banned')->default(false);
                 $table->string('contract')->nullable();
                 $table->text('graphic_works')->nullable();
@@ -245,6 +246,11 @@ return new class extends Migration {
         if (!Schema::hasColumn('users', 'is_banned')) {
             Schema::table('users', function (Blueprint $table) {
                 $table->boolean('is_banned')->default(false);
+            });
+        }
+        if (!Schema::hasColumn('users', 'is_owner')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->boolean('is_owner')->default(false);
             });
         }
         if (!Schema::hasColumn('users', 'contract')) {

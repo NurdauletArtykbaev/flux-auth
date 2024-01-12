@@ -31,6 +31,7 @@ class UserResource extends JsonResource
 //            'iik' => $this->iik,
             'moderation_status' => $this->is_verified,
             'is_identified' => $this->is_identified,
+            'is_owner' => $this->is_owner,
 //            'is_enabled_notification' => $this->is_enabled_notification,
 //            'role' => $this->whenLoaded('roles', function () {
 //                return new UserRoleResource($this->roles->first());

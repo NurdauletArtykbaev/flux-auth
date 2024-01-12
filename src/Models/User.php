@@ -2,19 +2,6 @@
 
 namespace Nurdaulet\FluxAuth\Models;
 
-//use Illuminate\Database\Eloquent\Model;
-//use Laravel\Sanctum\HasApiTokens;
-//
-//class User extends Model
-//{
-//    use HasApiTokens;
-//
-//    public function ratings()
-//    {
-//        return $this->hasMany(UserRating::class, 'receiver_id');
-//    }
-//}
-
 
 namespace Nurdaulet\FluxAuth\Models;
 
@@ -144,6 +131,7 @@ class User extends Authenticatable implements FilamentUser, HasName
 //        'identify_status' => 'integer',
         'is_identified' => 'boolean',
         'is_banned' => 'boolean',
+        'is_owner' => 'boolean',
         'online' => 'boolean',
         'delivery_times' => 'json',
         'graphic_works' => 'json',

@@ -31,10 +31,11 @@ class AuthService
         }
 
         Cache::put("$phone/code", $code, 120);
+        return (boolean) $user?->id;
     }
 
-    public function login($phoneNumber, $code)
+    public function login($data)
     {
-        return $this->authRepository->login($phoneNumber, $code);
+        return $this->authRepository->login($data);
     }
 }

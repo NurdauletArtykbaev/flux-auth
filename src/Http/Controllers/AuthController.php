@@ -16,14 +16,17 @@ class AuthController
 
     public function requestOtp(PhoneNumberRequest $request)
     {
-        $this->authService->requestOtp($request->phone);
+       $userExists =  $this->authService->requestOtp($request->phone);
 
-        return response()->json(['data' => null]);
+        return response()->json(['data' => [
+            'exists' => $userExists
+        ]]);
     }
 
     public function login(VerifyOtpRequest $request)
     {
-        $data = $this->authService->login($request->get('phone'), $request->get('code'));
+
+        $data = $this->authService->login($request->validated());
 
         return response()->json([
             'data' =>[

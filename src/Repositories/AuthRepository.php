@@ -10,8 +10,11 @@ use Nurdaulet\FluxAuth\Models\User;
 class AuthRepository
 {
 
-    public function login($phoneNumber, $code)
+    public function login($data)
     {
+        $phoneNumber = $data['phone'];
+        $code = $data['code'];
+        $isOwner = $data['is_owner'] ?? false;
         $right_value = Cache::get("$phoneNumber/code");
 
         if (!$right_value) {
@@ -24,17 +27,17 @@ class AuthRepository
 
         $user = User::query()->where('phone', $phoneNumber)->first();
         if (empty($user)) {
-            $user = $this->createUser($phoneNumber);
+            $user = $this->createUser($phoneNumber, $isOwner);
         }
 
         return $user->createToken("API TOKEN")->plainTextToken;
     }
 
-    private function createUser($phoneNumber)
+    private function createUser($phoneNumber, $isOwner)
     {
-        $user = User::where('phone', $phoneNumber)->create([
-            'phone' => StringFormatter::onlyDigits($phoneNumber)
+        return User::where('phone', $phoneNumber)->create([
+            'phone' =>  StringFormatter::onlyDigits($phoneNumber),
+            'is_owner' => $isOwner
         ]);
-        return $user;
     }
 }
