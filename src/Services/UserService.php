@@ -92,8 +92,12 @@ class UserService
     public function getUserProfile($user)
     {
 //        $user = $this->userRepository->find($user->id);
-        $user = $this->prepareProfileData($user);
-        return $user;
+        return $this->prepareProfileData($user);
+    }
+    public function saveOrganization($user,$data)
+    {
+//        $user = $this->userRepository->find($user->id);
+        return $user->organization()->updateOrCreate([], $data);
     }
 
     private function prepareProfileData($user)
@@ -115,6 +119,9 @@ class UserService
 //        }
         if (config('flux-auth.options.is_enabled_balance')) {
             $user->balance = WalletFacade::getBalanceByUserId($user->id);
+        }
+        if ($user->is_owner) {
+            $user->load('organization.typeOrganization');
         }
 //        if ($user->roles->isNotEmpty()) {
 //            $permissions = $user->getAllPermissions();

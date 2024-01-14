@@ -45,6 +45,9 @@ class UserResource extends JsonResource
                     'bonus' =>(int) $this->balance->bonus,
                 ];
             }),
+            'organization' => $this->whenLoaded('organization', function () {
+                return new UserOrganizationResource($this->organization);
+            }),
 //            'lord_balance' => $this->whenHas('lord_balance',function () {
 //                return [
 //                    'money' => $this->lord_balance->money,

@@ -95,6 +95,7 @@ class User extends Authenticatable implements FilamentUser, HasName
     {
         return $this->originalRoles();
     }
+
     public function getFilamentName(): string
     {
         return $this->name ?? 'П';
@@ -215,6 +216,11 @@ class User extends Authenticatable implements FilamentUser, HasName
     public function typeOrganization()
     {
         return $this->belongsTo(TypeOrganization::class, 'type_organization_id');
+    }
+
+    public function organization()
+    {
+        return $this->hasOne(UserOrganization::class);
     }
 
     public function addresses()

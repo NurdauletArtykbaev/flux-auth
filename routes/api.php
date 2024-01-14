@@ -21,6 +21,7 @@ Route::group(['prefix' => 'api'], function () {
 
     Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
         Route::get('', [UserController::class, 'me']);
+        Route::post('organization', [UserController::class, 'saveOrganization']);
         Route::put('', [UserController::class, 'update']);
         Route::delete('', [UserController::class, 'destroy']);
         Route::post('avatar', [UserController::class, 'uploadAvatar']);

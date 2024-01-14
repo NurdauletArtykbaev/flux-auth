@@ -5,6 +5,7 @@ namespace Nurdaulet\FluxAuth\Http\Controllers;
 use Nurdaulet\FluxAuth\Helpers\UserVerifyHelper;
 use Nurdaulet\FluxAuth\Http\Requests\UpdateUserRequest;
 use Nurdaulet\FluxAuth\Http\Requests\UserSaveContractRequest;
+use Nurdaulet\FluxAuth\Http\Requests\UserSaveOrganizationRequest;
 use Nurdaulet\FluxAuth\Http\Resources\AboutUserResource;
 use Nurdaulet\FluxAuth\Http\Resources\UserResource;
 use Nurdaulet\FluxAuth\Services\UserService;
@@ -24,6 +25,11 @@ class UserController
         return new UserResource($user);
     }
 
+    public function saveOrganization(UserSaveOrganizationRequest $request)
+    {
+        $this->userService->saveOrganization($request->user(), $request->validated());
+        return response()->noContent();
+    }
 
     public function uploadAvatar(Request $request)
     {
