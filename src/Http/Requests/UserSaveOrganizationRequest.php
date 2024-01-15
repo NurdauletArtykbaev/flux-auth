@@ -15,7 +15,7 @@ final class UserSaveOrganizationRequest extends FormRequest
             'form_organization' => "nullable",
             'bin_iin' => "nullable",
             'address' => "nullable",
-            'birthdate' => "nullable",
+            'birthdate' =>  ["nullable", 'date', 'date_format:Y-m-d'],
             'full_name_head' => "nullable",
             'type_organization_id' => "required",
             'certificate_register_ip' => "nullable",
