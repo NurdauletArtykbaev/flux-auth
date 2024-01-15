@@ -3,6 +3,7 @@
 namespace Nurdaulet\FluxAuth\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Nurdaulet\FluxAuth\Helpers\UserHelper;
 
 class UserResource extends JsonResource
 {
@@ -30,6 +31,7 @@ class UserResource extends JsonResource
 //            'bik' => $this->bik,
 //            'iik' => $this->iik,
             'moderation_status' => $this->is_verified,
+            'moderation_status_raw' => UserHelper::MODERATION_STATUS_RAWS[$this->is_verified],
             'is_identified' => $this->is_identified,
             'is_owner' => (bool) $this->is_owner,
 //            'is_enabled_notification' => $this->is_enabled_notification,

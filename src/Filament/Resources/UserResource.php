@@ -124,7 +124,6 @@ class UserResource extends Resource
                     ->directory(UserHelper::CONTRACT_DIR),
                 Forms\Components\Select::make('is_verified')
                     ->options(User::getVerifiedOptions())
-                    ->preload()
                     ->default(User::NOT_VERIFIED )
                     ->label(trans('admin.is_verified')),
                 Forms\Components\Toggle::make('is_identified')

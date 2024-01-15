@@ -17,5 +17,21 @@ class UserHelper
     const NOT_VERIFIED = 1;
     const ON_PROCESS = 2;
     const VERIFIED = 3;
+    const REJECTED = 4;
+    const MODERATION_STATUS_RAWS = [
+        self::NOT_VERIFIED  => 'not_verified',
+        self::ON_PROCESS  => 'on_verified',
+        self::VERIFIED  => 'verified',
+        self::REJECTED  => 'rejected',
+    ];
 
+
+    public static function getVerifiedOptions()
+    {
+        return [
+            self::NOT_VERIFIED => trans('admin.not_verified'),
+            self::ON_PROCESS => trans('admin.on_process'),
+            self::VERIFIED => trans('admin.verified'),
+        ];
+    }
 }

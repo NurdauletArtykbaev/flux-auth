@@ -4,6 +4,7 @@ namespace Nurdaulet\FluxAuth\Http\Resources;
 
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Nurdaulet\FluxAuth\Helpers\UserHelper;
 
 class AboutUserResource extends JsonResource
 {
@@ -25,7 +26,8 @@ class AboutUserResource extends JsonResource
             'ratings_count' => $this->avg_rating > 0 ? ($this->ratings_count <= 0 ? $this->id + 7 : $this->ratings_count) : 0,
             'phone' => $this->phone,
             'moderation_status' => $this->is_verified,
-            'avatar_url' => $this->avatar_url,
+            'moderation_status_raw' => UserHelper::MODERATION_STATUS_RAWS[$this->is_verified],
+            'avatar' => $this->avatar_url,
             'avatar_color' => $this->avatar_color,
             'last_online' => $this->last_online,
             'is_online' =>  $this->last_online
