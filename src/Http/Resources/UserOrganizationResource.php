@@ -21,7 +21,7 @@ class UserOrganizationResource extends JsonResource
             'address' => $this->address,
             'birthdate' => $this->birthdate,
             'full_name_head' => $this->full_name_head,
-            'type_organization' => $this->typeOrganization,
+            'type_organization' => new TypeOrganizationResource($this->typeOrganization),
             'certificate_register_ip' => $this->certificate_register_ip,
             'recipient_invoice_bank' => $this->recipient_invoice_bank,
             'recipient_invoice_bank_full_name' => $this->recipient_invoice_bank_full_name,
