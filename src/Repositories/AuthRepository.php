@@ -30,7 +30,8 @@ class AuthRepository
             $user = $this->createUser($phoneNumber, $isOwner);
         }
 
-        return $user->createToken("API TOKEN")->plainTextToken;
+
+        return ['token' => $user->createToken("API TOKEN")->plainTextToken, 'user' => $user];
     }
 
     private function createUser($phoneNumber, $isOwner)

@@ -10,7 +10,7 @@ use Nurdaulet\FluxAuth\Repositories\AuthRepository;
 
 class AuthService
 {
-    public function __construct(private AuthRepository $authRepository)
+    public function __construct(private AuthRepository $authRepository,private UserService $userService)
     {
     }
 
@@ -36,6 +36,8 @@ class AuthService
 
     public function login($data)
     {
-        return $this->authRepository->login($data);
+        [$token,  $user] = $this->authRepository->login($data);
+        $user = $this->userService->getUserProfile($user);
+        return [$token, $user];
     }
 }

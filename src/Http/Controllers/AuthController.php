@@ -26,11 +26,12 @@ class AuthController
     public function login(VerifyOtpRequest $request)
     {
 
-        $data = $this->authService->login($request->validated());
+        [$token, $user] = $this->authService->login($request->validated());
 
         return response()->json([
             'data' =>[
-                'token' => $data,
+                'token' => $token,
+                'user' => $user
             ]
         ]);
     }

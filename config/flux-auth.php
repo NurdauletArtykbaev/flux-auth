@@ -2,7 +2,7 @@
 return [
     'param' => env('EXAMPLE_PARAM', 100),
     'identify' => [
-        'enabled' => false,
+        'enabled' => env('IDENTIFY_ENABLED',false),
         'url' => env('IDENTIFY_URL'),
         'login' => env('IDENTIFY_LOGIN'),
         'password' => env('IDENTIFY_PASSWORD'),
