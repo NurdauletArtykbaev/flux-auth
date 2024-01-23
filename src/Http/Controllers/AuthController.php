@@ -5,6 +5,7 @@ namespace Nurdaulet\FluxAuth\Http\Controllers;
 use Illuminate\Http\Request;
 use Nurdaulet\FluxAuth\Http\Requests\PhoneNumberRequest;
 use Nurdaulet\FluxAuth\Http\Requests\VerifyOtpRequest;
+use Nurdaulet\FluxAuth\Http\Resources\UserResource;
 use Nurdaulet\FluxAuth\Models\User;
 use Nurdaulet\FluxAuth\Services\AuthService;
 
@@ -31,7 +32,7 @@ class AuthController
         return response()->json([
             'data' =>[
                 'token' => $token,
-                'user' => $user
+                'user' => new UserResource($user)
             ]
         ]);
     }
