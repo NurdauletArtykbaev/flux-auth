@@ -31,7 +31,7 @@ class IdentificationService
             $identification, $identifyBack);
 
         if (!$isSuccess) {
-            throw ValidationException::withMessages(['face' => 'Не похоже.Снимитесь повторно.']);
+            throw new \ErrorException( 'Не похоже.Снимитесь повторно.');
         }
 
         $identifyNumber = $this->getIdentifyNumberByUser(
