@@ -31,7 +31,7 @@ class IdentificationService
             $identification, $identifyBack);
 
         if (!$isSuccess) {
-            throw new \ErrorException( 'Не похоже.Снимитесь повторно.');
+            throw new \ErrorException( 'Не похоже.Снимитесь повторно.',400);
         }
 
         $identifyNumber = $this->getIdentifyNumberByUser(
