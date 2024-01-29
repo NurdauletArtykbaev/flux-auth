@@ -14,11 +14,8 @@ class IdentificationRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->test) {
-            return [];
-        }
         return [
-            'identification' => 'required',
+            'identification' => 'required|mimes:pdf,jpeg,jpg,png,heic',
             'face' => 'required|image',
         ];
     }

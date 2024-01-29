@@ -3,7 +3,6 @@
 namespace Nurdaulet\FluxAuth\Services;
 
 
-use Nurdaulet\FluxAuth\Helpers\UserHelper;
 use Nurdaulet\FluxAuth\Repositories\UserRepository;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
@@ -13,7 +12,8 @@ class IdentificationService
     protected mixed $url ;
     const IDENTITY_NUMBER_ENDPOINT = 'getIdentityNumber';
     const AUTH_ENDPOINT = 'token';
-    const REKOGNITION_ENDPOINT = 'compareFaces';
+    const REKOGNITION_PHOTO_ENDPOINT = 'compareFaces';
+    const REKOGNITION_PDF_ENDPOINT = 'compareFacesFromPdf';
 
     public function __construct(private UserRepository $userRepository)
     {
@@ -76,7 +76,7 @@ class IdentificationService
         $user->identify_back = $this->userRepository->uploadImageToCloud('identification', $user->id, $identifyBack);
         $user->save();
 
-        $checkRecognizeUser = $this->checkRecognizeUser($idImage, $faceImage);
+        $checkRecognizeUser = $idImage->getClientOriginalExtension() !== 'pdf' ? $this->checkRecognizeUserByPhoto($idImage, $faceImage) : $this->checkRecognizeUserByPdf($idImage, $faceImage);
 
         if ($lastIdentificationImage) {
             $this->userRepository->deleteImageFromCloud($lastIdentificationImage);
@@ -101,23 +101,6 @@ class IdentificationService
         return true;
     }
 
-    protected function checkRecognizeUser($id, $face)
-    {
-        $token = $this->authorizeInID()['access_token'];
-
-        try {
-            $recognize =  Http::withToken($token)->timeout(40)
-                ->attach(
-                    'photo', $face->get(), 'face.jpg'
-                )->attach(
-                    'document', $id->get(), 'id.jpg'
-                )->acceptJson()->post($this->url . self::REKOGNITION_ENDPOINT)->body();
-        } catch (\Exception $exception) {
-            abort(500,'Сервис временно не доступен. Обратитесь администратору');
-        }
-        return $recognize == "OK" || $recognize == '"OK"';
-    }
-
 
     public function handleContractPdf($file, $replacement = [])
     {
@@ -136,7 +119,6 @@ class IdentificationService
         }
     }
 
-
     public function handleContractDoc($file, $replacement = [])
     {
         $token = $this->authorizeInID()['access_token'];
@@ -152,6 +134,40 @@ class IdentificationService
         } catch (\Exception $exception) {
             abort(500,'Сервис временно не доступен. Обратитесь администратору');
         }
+    }
+
+    private function checkRecognizeUserByPdf($id, $face)
+    {
+        $token = $this->authorizeInID()['access_token'];
+
+        try {
+            $recognize =  Http::withToken($token)->timeout(40)
+                ->attach(
+                    'photo', $face->get(), 'face.jpg'
+                )->attach(
+                    'document', $id->get(), 'id.pdf'
+                )->acceptJson()->post($this->url . self::REKOGNITION_PDF_ENDPOINT)->body();
+        } catch (\Exception $exception) {
+            abort(500,'Сервис временно не доступен. Обратитесь администратору');
+        }
+        return $recognize == "OK" || $recognize == '"OK"';
+    }
+
+    private function checkRecognizeUserByPhoto($id, $face)
+    {
+        $token = $this->authorizeInID()['access_token'];
+
+        try {
+            $recognize =  Http::withToken($token)->timeout(40)
+                ->attach(
+                    'photo', $face->get(), 'face.jpg'
+                )->attach(
+                    'document', $id->get(), 'id.jpg'
+                )->acceptJson()->post($this->url . self::REKOGNITION_PHOTO_ENDPOINT)->body();
+        } catch (\Exception $exception) {
+            abort(500,'Сервис временно не доступен. Обратитесь администратору');
+        }
+        return $recognize == "OK" || $recognize == '"OK"';
     }
 
     protected function authorizeInID()

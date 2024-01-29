@@ -15,7 +15,7 @@ class IdentifyNumberRequest extends FormRequest
     public function rules()
     {
         return [
-          'document' => 'required|image',
+          'document' => 'required|mimes:pdf,jpeg,jpg,png,heic',
         ];
     }
 }
