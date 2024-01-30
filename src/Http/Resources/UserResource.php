@@ -9,15 +9,16 @@ class UserResource extends JsonResource
 {
     public function toArray($request)
     {
+        $moderationStatus = $this->is_verified ?? UserHelper::NOT_VERIFIED;
         return [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'last_name' => $this->last_name,
             'surname' => $this->surname,
-            'avatar' => $this->avatar ? config('filesystems.disks.s3.url').'/'.$this->avatar : null,
+            'avatar' => $this->avatar ? config('filesystems.disks.s3.url') . '/' . $this->avatar : null,
             'avatar_color' => $this->avatar_color,
-            'avg_rating' => (string) ($this->avg_rating <= 0 ? 0 : $this->avg_rating),
+            'avg_rating' => (string)($this->avg_rating <= 0 ? 0 : $this->avg_rating),
             'phone' => $this->phone,
 //            'logo_url' => $this->logoUrl,
 //            'graphic_works' => $this->graphic_works ?: [] ,
@@ -30,21 +31,20 @@ class UserResource extends JsonResource
 //            'born_date' => $this->born_date,
 //            'bik' => $this->bik,
 //            'iik' => $this->iik,
-            'moderation_status' => $this->is_verified,
-            'moderation_status_raw' => UserHelper::MODERATION_STATUS_RAWS[$this->is_verified],
-            'is_identified' => $this->is_identified,
-            'is_owner' => (bool) $this->is_owner,
+            'moderation_status' => $moderationStatus,
+            'moderation_status_raw' => UserHelper::MODERATION_STATUS_RAWS[$moderationStatus],
+            'is_identified' => (bool)$this->is_identified,
+            'is_owner' => (bool)$this->is_owner,
 //            'is_enabled_notification' => $this->is_enabled_notification,
 //            'role' => $this->whenLoaded('roles', function () {
 //                return new UserRoleResource($this->roles->first());
 //            }),
-//            'items_count' => $this->whenHas('items_count', fn() => $this->items_count),
 //            'monthly_ad_orders_count' => $this->whenHas('monthly_ad_orders_count', $this->monthly_ad_orders_count),
 //            'permissions' => $this->when(isset($this->permissions), $this->permissions),
             'balance' => $this->whenHas('balance', function () {
                 return [
-                    'money' =>(int) $this->balance->money,
-                    'bonus' =>(int) $this->balance->bonus,
+                    'money' => (int)$this->balance->money,
+                    'bonus' => (int)$this->balance->bonus,
                 ];
             }),
             'organization' => $this->whenLoaded('organization', function () {

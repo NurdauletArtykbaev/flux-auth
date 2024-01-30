@@ -7,13 +7,12 @@ use Nurdaulet\FluxAuth\Http\Requests\IdentifyNumberRequest;
 use Nurdaulet\FluxAuth\Http\Requests\IdentifyNumberSaveRequest;
 use Nurdaulet\FluxAuth\Services\IdentificationService;
 
-class IdentificationController 
+class IdentificationController
 {
 
     public function __construct(private IdentificationService $identificationService)
     {
     }
-
 
     public function identifyUser(IdentificationRequest $request)
     {
@@ -27,13 +26,11 @@ class IdentificationController
         ]);
     }
 
-
     public function getIdentifyNumber(IdentifyNumberRequest $request)
     {
         return response()->json([
             'data' => [
-                'identify_number' => $this->identificationService->getIdentifyNumberByUser(
-                    $request->user(),
+                'identify_number' => $this->identificationService->getIdentifyNumber(
                     $request->file('document')
                 )
             ]

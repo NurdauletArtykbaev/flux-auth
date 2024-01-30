@@ -9,8 +9,10 @@ use Illuminate\Validation\ValidationException;
 
 class IdentificationService
 {
-    protected mixed $url ;
-    const IDENTITY_NUMBER_ENDPOINT = 'getIdentityNumber';
+    protected mixed $url;
+    protected mixed $token;
+    const IDENTITY_NUMBER_PDF = 'parseIdCardFromPdf';
+    const IDENTITY_NUMBER_PHOTO = 'parseIdCard';
     const AUTH_ENDPOINT = 'token';
     const REKOGNITION_PHOTO_ENDPOINT = 'compareFaces';
     const REKOGNITION_PDF_ENDPOINT = 'compareFacesFromPdf';
@@ -18,54 +20,55 @@ class IdentificationService
     public function __construct(private UserRepository $userRepository)
     {
         $this->url = config('flux-auth.identify.url');
+        $this->token = $this->authorizeInID()['access_token'];
     }
 
-    /**
-     * @throws ValidationException
-     */
-    public function  identify($user, $face, $identification, $identifyBack = null)
+    public function identify($user, $face, $identification, $identifyBack = null)
     {
-        $isSuccess = $this->identifyUser(
-            $user,
-            $face,
-            $identification, $identifyBack);
+        $identifyNumber = $this->getIdentifyNumber($identification);
+        $isSuccess = $this->identifyUser($user, $face, $identification, $identifyBack);
 
         if (!$isSuccess) {
-            throw new \ErrorException( 'Не похоже.Снимитесь повторно.',400);
+            throw new \ErrorException('Не похоже.Снимитесь повторно.', 400);
         }
-
-        $identifyNumber = $this->getIdentifyNumberByUser(
-            $user,
-            $identification
-        );
 
         $user->iin = $identifyNumber;
         $user->save();
         return $identifyNumber;
     }
 
-
-    public function getIdentifyNumberByUser($user, $document)
+    public function getIdentifyNumber($document)
     {
-        $token = $this->authorizeInID()['access_token'];
         try {
-            $iin = Http::timeout(20)->withToken($token)
-                ->attach(
-                    'document',$document->get(), 'document.png'
-                )->asMultipart()->post($this->url . self::IDENTITY_NUMBER_ENDPOINT)->json();
+            $iin = $document->getClientOriginalExtension() !== 'pdf' ? $this->getIdentifyNumberByPhoto($document) : $this->getIdentifyNumberByPdf($document);
         } catch (\Exception $exception) {
-            return null;
+            abort(500, 'Сервис временно не доступен. Обратитесь администратору');
         }
-        if (isset($iin[0]) && $iin[0]['IIN']) {
-            return $iin[0]['IIN'];
+        if (isset($iin['IIN']) && !empty($iin['IIN'])) {
+            return $iin['IIN'];
         }
-        return null;
-//        throw ValidationException::withMessages(['identification' => 'Отправьте качественный документ ']);
+        throw new \ErrorException('Отправьте качественный документ.', 400);
+    }
+
+
+    private function getIdentifyNumberByPdf($document)
+    {
+        return Http::timeout(20)->withToken($this->token)
+            ->attach(
+                'document', $document->get(), 'document.png'
+            )->asMultipart()->post($this->url . self::IDENTITY_NUMBER_PDF)->json();
+    }
+
+    private function getIdentifyNumberByPhoto($document)
+    {
+        return Http::timeout(20)->withToken($this->token)
+            ->attach(
+                'document', $document->get(), 'document.png'
+            )->asMultipart()->post($this->url . self::IDENTITY_NUMBER_PHOTO)->json();
     }
 
     private function identifyUser($user, $faceImage, $idImage, $identifyBack = null): bool
     {
-//        $user->identify_face = UserHelper::IDENTIFY_STATUS_SUCCESS;
         $lastIdentificationImage = $user->identify_front;
         $lastIdentifyFaceImage = $user->identify_face;
         $lastIdentifyBackImage = $user->identify_back;
@@ -92,7 +95,7 @@ class IdentificationService
         if (!$checkRecognizeUser) {
             $user->is_identified = false;
             $user->save();
-            return  false;
+            return false;
         }
 
         $user->is_identified = true;
@@ -104,10 +107,8 @@ class IdentificationService
 
     public function handleContractPdf($file, $replacement = [])
     {
-        $token = $this->authorizeInID()['access_token'];
-
         try {
-            return Http::withToken($token)
+            return Http::withToken($this->token)
                 ->attach(
                     'document', file_get_contents($file), 'rent.pdf'
                 )
@@ -115,16 +116,14 @@ class IdentificationService
                 ->post($this->url . 'autoEditPdf', ['replacements' => json_encode($replacement)])->body();
 
         } catch (\Exception $exception) {
-            abort(500,'Сервис временно не доступен. Обратитесь администратору');
+            abort(500, 'Сервис временно не доступен. Обратитесь администратору');
         }
     }
 
     public function handleContractDoc($file, $replacement = [])
     {
-        $token = $this->authorizeInID()['access_token'];
-
         try {
-            return Http::withToken($token)
+            return Http::withToken($this->token)
                 ->attach(
                     'document', file_get_contents($file), 'rent.docx'
                 )
@@ -132,40 +131,36 @@ class IdentificationService
                 ->post($this->url . 'autoEditDoc', ['replacements' => json_encode($replacement)])->body();
 
         } catch (\Exception $exception) {
-            abort(500,'Сервис временно не доступен. Обратитесь администратору');
+            abort(500, 'Сервис временно не доступен. Обратитесь администратору');
         }
     }
 
     private function checkRecognizeUserByPdf($id, $face)
     {
-        $token = $this->authorizeInID()['access_token'];
-
         try {
-            $recognize =  Http::withToken($token)->timeout(40)
+            $recognize = Http::withToken($this->token)->timeout(40)
                 ->attach(
                     'photo', $face->get(), 'face.jpg'
                 )->attach(
                     'document', $id->get(), 'id.pdf'
                 )->acceptJson()->post($this->url . self::REKOGNITION_PDF_ENDPOINT)->body();
         } catch (\Exception $exception) {
-            abort(500,'Сервис временно не доступен. Обратитесь администратору');
+            abort(500, 'Сервис временно не доступен. Обратитесь администратору');
         }
         return $recognize == "OK" || $recognize == '"OK"';
     }
 
     private function checkRecognizeUserByPhoto($id, $face)
     {
-        $token = $this->authorizeInID()['access_token'];
-
         try {
-            $recognize =  Http::withToken($token)->timeout(40)
+            $recognize = Http::withToken($this->token)->timeout(40)
                 ->attach(
                     'photo', $face->get(), 'face.jpg'
                 )->attach(
                     'document', $id->get(), 'id.jpg'
                 )->acceptJson()->post($this->url . self::REKOGNITION_PHOTO_ENDPOINT)->body();
         } catch (\Exception $exception) {
-            abort(500,'Сервис временно не доступен. Обратитесь администратору');
+            abort(500, 'Сервис временно не доступен. Обратитесь администратору');
         }
         return $recognize == "OK" || $recognize == '"OK"';
     }
