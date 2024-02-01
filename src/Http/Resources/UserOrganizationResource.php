@@ -2,7 +2,9 @@
 
 namespace Nurdaulet\FluxAuth\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Nurdaulet\FluxAuth\Helpers\UserOrganizationHelper;
 
 class UserOrganizationResource extends JsonResource
 {
@@ -14,7 +16,9 @@ class UserOrganizationResource extends JsonResource
      */
     public function toArray($request)
     {
+
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'form_organization' => $this->form_organization,
             'bin_iin' => $this->bin_iin,
@@ -28,7 +32,20 @@ class UserOrganizationResource extends JsonResource
             'bik' => $this->bik,
             'iban' => $this->iban,
             'recipient_invoice_address' => $this->recipient_invoice_address,
+            'status_raw' => UserOrganizationHelper::STATUS_RAWS[$this->status] ?? UserOrganizationHelper::STATUS_FAILED,
+            'message' => $this->message,
+            'end_check_hour' => $this->calculateEndCheckHour()
         ];
+    }
+
+    private function calculateEndCheckHour()
+    {
+        $checkHour = config('flux-auth.options.organization_check_hour', 12);
+        return $this->status == UserOrganizationHelper::STATUS_WAITING
+            ? (Carbon::now()->diffInHours(Carbon::create($this->updated_at)) < $checkHour)
+                ? (config('flux-auth.options.organization_check_hour', 12) - Carbon::now()->diffInHours(Carbon::create($this->updated_at)) )
+                : 0
+            : 0;
     }
 
     private function getLord()

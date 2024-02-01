@@ -26,6 +26,7 @@ class UserHelper
     ];
 
 
+
     public static function getVerifiedOptions()
     {
         return [

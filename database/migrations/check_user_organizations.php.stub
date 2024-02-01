@@ -35,6 +35,8 @@ return new class extends Migration {
                 $table->string('bik')->nullable()->comment("БИК");
                 $table->string('iban')->nullable()->comment("IBAN");
                 $table->string('recipient_invoice_address')->nullable()->comment("Адрес получателя счетов");
+                $table->integer('status')->default(0);
+                $table->text('message')->nullable();
                 $table->softDeletes();
                 $table->timestamps();
             });
@@ -118,6 +120,17 @@ return new class extends Migration {
                 $table->string('recipient_invoice_address')->nullable()->comment("Адрес получателя счетов");
             });
         }
+        if (!Schema::hasColumn('user_organizations', 'status')) {
+            Schema::table('user_organizations', function (Blueprint $table) {
+                $table->integer('status')->default(0);
+            });
+        }
+        if (!Schema::hasColumn('user_organizations', 'message')) {
+            Schema::table('user_organizations', function (Blueprint $table) {
+                $table->text('message')->nullable();
+            });
+        }
+
         if (!Schema::hasColumn('user_organizations', 'created_at')) {
             Schema::table('user_organizations', function (Blueprint $table) {
                 $table->timestamps();

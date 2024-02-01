@@ -21,6 +21,7 @@ return [
     'options' => [
         'storage_disk' => 's3',
         'is_enabled_balance' => false,
+        'organization_check_hour' => 12,
         'filament_email_access_end' => ''
     ],
     'permission' => [
