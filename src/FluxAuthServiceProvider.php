@@ -42,7 +42,7 @@ class FluxAuthServiceProvider extends ServiceProvider
             __DIR__ . '/../database/migrations/check_user_ratings_table.php.stub' => $this->getMigrationFileName(6,'check_flux_auth_user_ratings_table.php'),
             __DIR__ . '/../database/migrations/check_stores_table.php.stub' => $this->getMigrationFileName(7,'check_flux_auth_stores_table.php'),
             __DIR__ . '/../database/migrations/check_permissions_table.php.stub' => $this->getMigrationFileName(8,'check_flux_auth_permissions_table.php'),
-            __DIR__ . '/../database/migrations/check_user_organizations.php.stub' => $this->getMigrationFileName(9,'check_flux_user_organizations_table.php'),
+            __DIR__ . '/../database/migrations/check_user_organizations.php.stub' => $this->getMigrationFileName(9,'check_flux_auth_user_organizations_table.php'),
         ], 'flux-auth-migrations');
     }
 

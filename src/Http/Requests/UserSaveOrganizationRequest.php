@@ -11,7 +11,7 @@ final class UserSaveOrganizationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => "required",
+            'name' => "nullable",
             'form_organization' => "nullable",
             'bin_iin' => "nullable",
             'address' => "nullable",
