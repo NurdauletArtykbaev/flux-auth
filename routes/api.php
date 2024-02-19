@@ -29,7 +29,7 @@ Route::group(['prefix' => 'api'], function () {
             Route::get('organizations/{organization}', [UserOrganizationController::class, 'show']);
             Route::post('organizations/{organization}', [UserOrganizationController::class, 'update']);
             Route::post('organizations', [UserOrganizationController::class, 'store']);
-            Route::delete('organizations', [UserOrganizationController::class, 'destroy']);
+            Route::delete('organizations/{id}', [UserOrganizationController::class, 'destroy']);
         }
 
         Route::put('', [UserController::class, 'update']);
