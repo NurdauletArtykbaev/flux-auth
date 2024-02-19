@@ -121,7 +121,13 @@ class UserService
             $user->balance = WalletFacade::getBalanceByUserId($user->id);
         }
         if ($user->is_owner) {
-            $user->load('organization.typeOrganization');
+
+
+            $relations = config('flux-auth.options.is_multiple_organizations')
+                ? 'organizations.typeOrganization'
+                : 'organization.typeOrganization';
+            $user->load($relations);
+
         }
 //        if ($user->roles->isNotEmpty()) {
 //            $permissions = $user->getAllPermissions();

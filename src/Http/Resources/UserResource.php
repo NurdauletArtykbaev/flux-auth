@@ -50,6 +50,9 @@ class UserResource extends JsonResource
             'organization' => $this->whenLoaded('organization', function () {
                 return new UserOrganizationResource($this->organization);
             }),
+            'organizations' => $this->whenLoaded('organizations', function () {
+                return UserOrganizationResource::collection($this->organizations);
+            }),
 //            'lord_balance' => $this->whenHas('lord_balance',function () {
 //                return [
 //                    'money' => $this->lord_balance->money,

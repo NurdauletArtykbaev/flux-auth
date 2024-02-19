@@ -223,6 +223,11 @@ class User extends Authenticatable implements FilamentUser, HasName
         return $this->hasOne(UserOrganization::class);
     }
 
+    public function organizations()
+    {
+        return $this->hasMany(UserOrganization::class);
+    }
+
     public function addresses()
     {
         return $this->hasMany(UserAddress::class, 'user_id');

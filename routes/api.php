@@ -2,6 +2,7 @@
 
 
 use Illuminate\Support\Facades\Route;
+use Nurdaulet\FluxAuth\Http\Controllers\UserOrganizationController;
 use Nurdaulet\FluxAuth\Http\Controllers\UserRatingController;
 use Nurdaulet\FluxAuth\Http\Controllers\ComplaintController;
 use Nurdaulet\FluxAuth\Http\Controllers\UserController;
@@ -22,11 +23,18 @@ Route::group(['prefix' => 'api'], function () {
     Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
         Route::get('', [UserController::class, 'me']);
         Route::post('organization', [UserController::class, 'saveOrganization']);
+
+        if (config('flux-auth.options.is_multiple_organizations')) {
+            Route::get('organizations', [UserOrganizationController::class, 'index']);
+            Route::get('organizations/{organization}', [UserOrganizationController::class, 'show']);
+            Route::post('organizations/{organization}', [UserOrganizationController::class, 'update']);
+            Route::post('organizations', [UserOrganizationController::class, 'store']);
+            Route::delete('organizations', [UserOrganizationController::class, 'destroy']);
+        }
+
         Route::put('', [UserController::class, 'update']);
         Route::delete('', [UserController::class, 'destroy']);
         Route::post('avatar', [UserController::class, 'uploadAvatar']);
-//    Route::get('delivery', [UserController::class, 'getDelivery']);
-//    Route::post('delivery', [UserController::class, 'updateDelivery']);
 
         if (config('flux-auth.identify.enabled')) {
 

@@ -9,6 +9,7 @@ return [
     ],
     'models' => [
         'user_address' => \Nurdaulet\FluxAuth\Models\UserAddress::class,
+        'user_organization' => \Nurdaulet\FluxAuth\Models\UserOrganization::class,
         'user_rating' => \Nurdaulet\FluxAuth\Models\UserRating::class,
         'store' => \Nurdaulet\FluxAuth\Models\Store::class,
         'complaint_user' => \Nurdaulet\FluxAuth\Models\ComplaintUser::class,
@@ -21,6 +22,7 @@ return [
     'options' => [
         'storage_disk' => 's3',
         'is_enabled_balance' => false,
+        'is_multiple_organizations' => false,
         'organization_check_hour' => 12,
         'filament_email_access_end' => ''
     ],
