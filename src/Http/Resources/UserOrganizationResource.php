@@ -35,7 +35,8 @@ class UserOrganizationResource extends JsonResource
             'recipient_invoice_address' => $this->recipient_invoice_address,
             'status_raw' => UserOrganizationHelper::STATUS_RAWS[$this->status] ?? UserOrganizationHelper::STATUS_FAILED,
             'message' => $this->message,
-            'end_check_hour' => $this->calculateEndCheckHour()
+            'end_check_hour' => $this->calculateEndCheckHour(),
+            'is_selected' => (boolean) $this->is_selected
         ];
     }
 
