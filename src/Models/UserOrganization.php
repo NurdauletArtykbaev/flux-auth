@@ -29,6 +29,8 @@ class UserOrganization extends Model
         'recipient_invoice_bank_full_name',
         'bik',
         'iban',
+        'is_selected',
+        'field_activity',
         'recipient_invoice_address'
     ];
 
@@ -41,4 +43,8 @@ class UserOrganization extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    protected $casts = [
+        'is_selected'  => 'boolean'
+    ];
 }

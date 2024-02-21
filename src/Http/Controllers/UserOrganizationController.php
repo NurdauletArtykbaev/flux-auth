@@ -44,7 +44,21 @@ class UserOrganizationController
             ->with('typeOrganization')
             ->findOrFail($id);
         $organization->update($request->validated());
-        return new UserResource($user);
+        return response()->noContent();
+    }
+
+    public function updateSelected($id)
+    {
+
+        $user = auth()->guard('sanctum')->user();
+        $organization = config('flux-auth.models.user_organization')::where('user_id', $user->id)
+            ->findOrFail($id);
+        $organization->update(['is_selected' => true]);
+
+        config('flux-auth.models.user_organization')::where('user_id', $user->id)
+            ->where('id', '<>', $organization->id)
+            ->update(['is_selected' => false]);
+        return response()->noContent();
     }
 
     public function destroy($id, Request $request)

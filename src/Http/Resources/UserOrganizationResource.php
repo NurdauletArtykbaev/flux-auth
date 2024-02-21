@@ -24,6 +24,7 @@ class UserOrganizationResource extends JsonResource
             'bin_iin' => $this->bin_iin,
             'address' => $this->address,
             'birthdate' => $this->birthdate,
+            'field_activity' => $this->field_activity,
             'full_name_head' => $this->full_name_head,
             'type_organization' => new TypeOrganizationResource($this->typeOrganization),
             'certificate_register_ip' => $this->certificate_register_ip,

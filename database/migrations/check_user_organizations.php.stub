@@ -28,6 +28,8 @@ return new class extends Migration {
                 $table->foreignId('type_organization_id')->nullable()
                     ->constrained('type_organizations')->nullOnDelete();
                 $table->string('certificate_register_ip')->nullable()->comment("Талон о регистрации ИП");
+                $table->string('field_activity')->nullable()->comment("Сфера деятель");
+                $table->boolean('is_selected')->default(false);
 
                 //Оплата
                 $table->string('recipient_invoice_bank')->nullable()->comment("Банк-получатель оплаты");
@@ -93,6 +95,16 @@ return new class extends Migration {
             Schema::table('user_organizations', function (Blueprint $table) {
                 $table->string('certificate_register_ip')->nullable()->comment("Талон о регистрации ИП");
 
+            });
+        }
+        if (!Schema::hasColumn('user_organizations', 'field_activity')) {
+            Schema::table('user_organizations', function (Blueprint $table) {
+                $table->string('field_activity')->nullable()->comment("Сфера деятель");
+            });
+        }
+        if (!Schema::hasColumn('user_organizations', 'is_selected')) {
+            Schema::table('user_organizations', function (Blueprint $table) {
+                $table->boolean('is_selected')->default(false);
             });
         }
         if (!Schema::hasColumn('user_organizations', 'recipient_invoice_bank')) {

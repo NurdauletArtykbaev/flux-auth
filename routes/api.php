@@ -28,6 +28,7 @@ Route::group(['prefix' => 'api'], function () {
             Route::get('organizations', [UserOrganizationController::class, 'index']);
             Route::get('organizations/{organization}', [UserOrganizationController::class, 'show']);
             Route::post('organizations/{organization}', [UserOrganizationController::class, 'update']);
+            Route::post('organizations/{organization}/select', [UserOrganizationController::class, 'updateSelected']);
             Route::post('organizations', [UserOrganizationController::class, 'store']);
             Route::delete('organizations/{id}', [UserOrganizationController::class, 'destroy']);
         }

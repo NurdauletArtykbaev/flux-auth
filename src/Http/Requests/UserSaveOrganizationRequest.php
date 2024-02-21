@@ -21,6 +21,8 @@ final class UserSaveOrganizationRequest extends FormRequest
             'certificate_register_ip' => "nullable",
             'recipient_invoice_bank' => "nullable",
             'recipient_invoice_bank_full_name' => "nullable",
+            'is_selected' => "nullable",
+            'field_activity' => "nullable",
             'bik' => "nullable",
             'iban' => "nullable",
             'recipient_invoice_address' => "nullable",
