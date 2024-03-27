@@ -23,6 +23,9 @@ class UserOrganizationController
         $user = auth()->guard('sanctum')->user();
         $data = $request->validated();
         $data['user_id'] = $user->id;
+        if (config('flux-auth.options.organization_default_status')) {
+            $data['status'] = config('flux-auth.options.organization_default_status');
+        }
         config('flux-auth.models.user_organization')::create($data);
         return response()->noContent();
     }

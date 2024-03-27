@@ -20,6 +20,7 @@ return [
         'city' => \Nurdaulet\FluxAuth\Models\City::class,
     ],
     'options' => [
+        'organization_default_status' => null,
         'storage_disk' => 's3',
         'is_enabled_balance' => false,
         'is_multiple_organizations' => false,
