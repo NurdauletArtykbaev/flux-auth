@@ -23,7 +23,8 @@ class UserOrganizationController
         $user = auth()->guard('sanctum')->user();
         $data = $request->validated();
         $data['user_id'] = $user->id;
-        $isSelectedExists = config('flux-auth.models.user_organization')::where('is_selected', true)->where('user_id', $user->id)->exits();
+        $isSelectedExists = config('flux-auth.models.user_organization')::where('is_selected', true)
+            ->where('user_id', $user->id)->exists();
         if (!$isSelectedExists) {
             $data['is_selected'] = true;
         }
