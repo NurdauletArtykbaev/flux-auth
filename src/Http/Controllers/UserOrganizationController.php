@@ -4,7 +4,6 @@ namespace Nurdaulet\FluxAuth\Http\Controllers;
 
 use Nurdaulet\FluxAuth\Http\Requests\UserSaveOrganizationRequest;
 use Nurdaulet\FluxAuth\Http\Resources\UserOrganizationResource;
-use Nurdaulet\FluxAuth\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 
 class UserOrganizationController
@@ -20,9 +19,14 @@ class UserOrganizationController
 
     public function store(UserSaveOrganizationRequest $request)
     {
+
         $user = auth()->guard('sanctum')->user();
         $data = $request->validated();
         $data['user_id'] = $user->id;
+        $isSelectedExists = config('flux-auth.models.user_organization')::where('is_selected', true)->where('user_id', $user->id)->exits();
+        if (!$isSelectedExists) {
+            $data['is_selected'] = true;
+        }
         if (config('flux-auth.options.organization_default_status')) {
             $data['status'] = config('flux-auth.options.organization_default_status');
         }
@@ -47,9 +51,22 @@ class UserOrganizationController
             ->with('typeOrganization')
             ->findOrFail($id);
         $organization->update($request->validated());
+
+        $this->checkIsSelecectOrganization($user);
         return response()->noContent();
     }
 
+    private function checkIsSelecectOrganization($user)
+    {
+        $userOrganizations = config('flux-auth.models.user_organization')::where('user_id', 20)->get();
+        if (!empty($userOrganizations)) {
+            if (!$userOrganizations->where('is_selected', 1)->count()) {
+                $org = $userOrganizations->first();
+                $org->is_selected = 1;
+                $org->save();
+            }
+        }
+    }
     public function updateSelected($id)
     {
 
@@ -71,6 +88,7 @@ class UserOrganizationController
             ->with('typeOrganization')
             ->findOrFail($id);
         $organization->delete();
+        $this->checkIsSelecectOrganization($user);
         return response()->noContent();
     }
 }
