@@ -23,6 +23,7 @@ class UserOrganization extends Model
         'birthdate',
         'full_name_head',
         'user_id',
+        'status',
         'type_organization_id',
         'certificate_register_ip',
         'recipient_invoice_bank',
