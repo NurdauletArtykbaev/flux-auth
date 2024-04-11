@@ -1,11 +1,7 @@
 <?php
 
-namespace Nurdaulet\FluxWallet\Events\Payment;
-use Illuminate\Broadcasting\Channel;
+namespace Nurdaulet\FluxAuth\Events\User;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 

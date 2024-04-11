@@ -3,10 +3,9 @@
 namespace Nurdaulet\FluxAuth\Services;
 
 
+use Nurdaulet\FluxAuth\Events\User\IdentifySuccessEvent;
 use Nurdaulet\FluxAuth\Repositories\UserRepository;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Validation\ValidationException;
-use Nurdaulet\FluxWallet\Events\Payment\IdentifySuccessEvent;
 
 class IdentificationService
 {
