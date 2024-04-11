@@ -6,6 +6,7 @@ namespace Nurdaulet\FluxAuth\Services;
 use Nurdaulet\FluxAuth\Repositories\UserRepository;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
+use Nurdaulet\FluxWallet\Events\Payment\IdentifySuccessEvent;
 
 class IdentificationService
 {
@@ -30,6 +31,8 @@ class IdentificationService
 
         if (!$isSuccess) {
             throw new \ErrorException('Не похоже.Снимитесь повторно.', 400);
+        } else {
+            event(new IdentifySuccessEvent($user));
         }
 
         $user->iin = $identifyNumber;

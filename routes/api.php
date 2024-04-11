@@ -67,5 +67,4 @@ Route::group(['prefix' => 'api'], function () {
     });
     Route::get('user/{id}/about', [UserController::class, 'aboutUser']);
     Route::get('roles', RoleController::class)->middleware('auth:sanctum');
-
 });
