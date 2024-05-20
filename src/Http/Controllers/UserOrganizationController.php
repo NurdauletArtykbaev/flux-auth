@@ -29,7 +29,7 @@ class UserOrganizationController
         $data['user_id'] = $user->id;
 
         if (isset($data['temp_image_id'])) {
-            $data['image']  = TemproryImage::find('temp_image_id')?->image;
+            $data['image']  = TemproryImage::find($data['temp_image_id'])?->image;
         }
 
         $isSelectedExists = config('flux-auth.models.user_organization')::where('is_selected', true)
@@ -63,7 +63,7 @@ class UserOrganizationController
         $data = $request->validated();
 //        $image = $request->input('image',null);
         if (isset($data['temp_image_id'])) {
-            $data['image']  = TemproryImage::find('temp_image_id')?->image;
+            $data['image']  = TemproryImage::find($data['temp_image_id'])?->image;
         }
 //        $data['image'] = $request->input('image');
 //        if (isset($data['image'])) {
