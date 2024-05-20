@@ -19,7 +19,12 @@ class UserOrganizationResource extends JsonResource
 
         return [
             'id' => $this->id,
+            'image_path' => $this->image ? (config('filesystems.disks.s3.url') . '/' . $this->image) : null,
             'name' => $this->name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'city_id' => $this->city_id,
+            'city' => new CityResource($this->city),
             'form_organization' => $this->form_organization,
             'bin_iin' => $this->bin_iin,
             'address' => $this->address,

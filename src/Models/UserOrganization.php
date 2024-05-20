@@ -17,6 +17,10 @@ class UserOrganization extends Model
 
     protected $fillable = [
         'name',
+        'image',
+        'email',
+        'phone',
+        'city_id',
         'form_organization',
         'bin_iin',
         'address',

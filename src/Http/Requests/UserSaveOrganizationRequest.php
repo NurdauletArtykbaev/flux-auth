@@ -12,6 +12,11 @@ final class UserSaveOrganizationRequest extends FormRequest
     {
         return [
             'name' => "nullable",
+            'phone' => "nullable",
+            'email' => "nullable",
+            'image' => "nullable",
+            'city_id' => "nullable",
+            'temp_image_id' => "nullable",
             'form_organization' => "nullable",
             'bin_iin' => "nullable",
             'address' => "nullable",

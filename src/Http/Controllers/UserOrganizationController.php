@@ -5,6 +5,7 @@ namespace Nurdaulet\FluxAuth\Http\Controllers;
 use Nurdaulet\FluxAuth\Http\Requests\UserSaveOrganizationRequest;
 use Nurdaulet\FluxAuth\Http\Resources\UserOrganizationResource;
 use Illuminate\Http\Request;
+use Nurdaulet\FluxAuth\Models\TemproryImage;
 
 class UserOrganizationController
 {
@@ -27,6 +28,10 @@ class UserOrganizationController
         $data = $request->validated();
         $data['user_id'] = $user->id;
 
+        if (isset($data['temp_image_id'])) {
+            $data['image']  = TemproryImage::find('temp_image_id')?->image;
+        }
+
         $isSelectedExists = config('flux-auth.models.user_organization')::where('is_selected', true)
             ->where('user_id', $user->id)->exists();
         if (!$isSelectedExists) {
@@ -43,7 +48,7 @@ class UserOrganizationController
     {
         $user = auth()->guard('sanctum')->user();
         $organization = config('flux-auth.models.user_organization')::where('user_id', $user->id)
-            ->with('typeOrganization')
+            ->with('typeOrganization','city')
             ->findOrFail($id);
         return new UserOrganizationResource($organization);
     }
@@ -55,7 +60,16 @@ class UserOrganizationController
         $organization = config('flux-auth.models.user_organization')::where('user_id', $user->id)
             ->with('typeOrganization')
             ->findOrFail($id);
-        $organization->update($request->validated());
+        $data = $request->validated();
+//        $image = $request->input('image',null);
+        if (isset($data['temp_image_id'])) {
+            $data['image']  = TemproryImage::find('temp_image_id')?->image;
+        }
+//        $data['image'] = $request->input('image');
+//        if (isset($data['image'])) {
+//            $data['image']  = TemproryImage::find('temp_image_id')?->image;
+//        }
+        $organization->update($data);
 
         $this->checkIsSelecectOrganization($user);
         return response()->noContent();
@@ -72,6 +86,7 @@ class UserOrganizationController
             }
         }
     }
+
     public function updateSelected($id)
     {
 
