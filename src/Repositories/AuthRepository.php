@@ -12,7 +12,7 @@ class AuthRepository
 
     public function login($data)
     {
-        $phoneNumber = $data['phone'];
+        $phoneNumber = StringFormatter::onlyDigits($data['phone']) ;
         $code = $data['code'];
         $isOwner = $data['is_owner'] ?? false;
         $right_value = Cache::get("$phoneNumber/code");
